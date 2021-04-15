@@ -14,6 +14,7 @@ const Main = () => {
     const [loading, setLoading] = useState(false);
     const [countries, setCountries] = useState({});
     const [theme, setTheme] = useState(themes.light);
+    const [catName, setCatName] = useState('');
 
     const mainStyle = {
         display: 'flex',
@@ -47,13 +48,19 @@ const Main = () => {
         return <div>{error}</div>
     }
 
-    const filterCats = (country) => {
+    const filterByCountry = (country) => {
         if (country === 'All') {
             setCats(originalCats);
         } else {
             const filteredCats = originalCats.filter(cat => cat.origin === country);
             setCats(filteredCats);
         }
+    }
+
+    const filterByCatName = (name) => {
+        const filteredCats = name ? cats.filter(cat => cat.name.toLowerCase().includes(name)) : originalCats;
+        setCatName(name);
+        setCats(filteredCats);
     }
 
     const toggleTheme = () => {
@@ -66,7 +73,7 @@ const Main = () => {
                 <Header changeTheme={toggleTheme} length={originalCats.length} averageWeight={getAverageWeight(originalCats)} averageLifeSpan={getAverageLifeSpan(originalCats)}/>
             </ThemeContext.Provider>
 
-            <Filter countries={countries} handleClick={filterCats} />
+            <Filter countries={countries} catName={catName} handleClick={filterByCountry} handleOnChange={filterByCatName} />
 
             <Body cats={cats} />
         </div>

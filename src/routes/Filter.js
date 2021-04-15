@@ -1,6 +1,6 @@
 import { React } from 'react';
 
-const Filter = ( { countries, handleClick } ) => {
+const Filter = ( { countries, catName, handleClick, handleOnChange } ) => {
 
     const filterStyle = {
         display: 'flex',
@@ -37,7 +37,7 @@ const Filter = ( { countries, handleClick } ) => {
     return (
         <div id="catFilters" style={filterStyle}>
             <div>
-                <input style={inputStyle} type="text"></input>
+                <input style={inputStyle} type="text" value={catName} onChange={(e) => handleOnChange(e.target.value)}></input>
                 
             </div>
 
