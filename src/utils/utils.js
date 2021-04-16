@@ -31,7 +31,7 @@ const getCountries = (cats) => {
             counter[cat.origin] = 1;
         }
         return counter;
-    }, {All: undefined});
+    }, {All: ''});
 }
 
 export { getAverageLifeSpan, getAverageWeight, getCountries };

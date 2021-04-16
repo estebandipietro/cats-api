@@ -1,6 +1,6 @@
 import { React } from 'react';
 
-const Filter = ( { countries, catName, handleClick, handleOnChange } ) => {
+const Filter = ( { filters, countries, filterCats } ) => {
 
     const filterStyle = {
         display: 'flex',
@@ -37,13 +37,13 @@ const Filter = ( { countries, catName, handleClick, handleOnChange } ) => {
     return (
         <div id="catFilters" style={filterStyle}>
             <div>
-                <input style={inputStyle} type="text" value={catName} onChange={(e) => handleOnChange(e.target.value)}></input>
+                <input style={inputStyle} type="text" value={filters.name} onChange={(e) => filterCats({name: e.target.value.toLowerCase()})}></input>
                 
             </div>
 
             <div style={countryFilter}>
                 {Object.keys(countries).map(k => {
-                    return <button key={k} style={buttonStyle} onClick={() => handleClick(k)}>{k.toUpperCase()} {countries[k]}</button>
+                    return <button key={k} style={buttonStyle} onClick={() => filterCats({origin: k.toLowerCase() === 'all' ? '' : k.toLowerCase()})}>{k.toUpperCase()} {countries[k]}</button>
                 })}
             </div>
         </div>

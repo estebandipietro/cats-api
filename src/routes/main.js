@@ -14,7 +14,7 @@ const Main = () => {
     const [loading, setLoading] = useState(false);
     const [countries, setCountries] = useState({});
     const [theme, setTheme] = useState(themes.light);
-    const [catName, setCatName] = useState('');
+    const [filters, setFilters] = useState({name: '', origin: ''});
 
     const mainStyle = {
         display: 'flex',
@@ -48,18 +48,23 @@ const Main = () => {
         return <div>{error}</div>
     }
 
-    const filterByCountry = (country) => {
-        if (country === 'All') {
-            setCats(originalCats);
-        } else {
-            const filteredCats = originalCats.filter(cat => cat.origin === country);
-            setCats(filteredCats);
-        }
-    }
+    const filterCats = (fill) => {
+        const newFilters = {...filters, ...fill};
+        setFilters(newFilters);
 
-    const filterByCatName = (name) => {
-        const filteredCats = name ? cats.filter(cat => cat.name.toLowerCase().includes(name)) : originalCats;
-        setCatName(name);
+        const fitlerKeys = Object.keys(newFilters);
+
+        const filteredCats = originalCats.filter(cat => {
+
+            for (let i = 0; i < fitlerKeys.length; i++) {
+
+                if (newFilters[fitlerKeys[i]] && !cat[fitlerKeys[i]].toLowerCase().includes(newFilters[fitlerKeys[i]])) {
+                    return false;
+                }
+            }
+            return true;
+        });
+
         setCats(filteredCats);
     }
 
@@ -73,7 +78,7 @@ const Main = () => {
                 <Header changeTheme={toggleTheme} length={originalCats.length} averageWeight={getAverageWeight(originalCats)} averageLifeSpan={getAverageLifeSpan(originalCats)}/>
             </ThemeContext.Provider>
 
-            <Filter countries={countries} catName={catName} handleClick={filterByCountry} handleOnChange={filterByCatName} />
+            <Filter filters={filters} countries={countries} filterCats={filterCats} />
 
             <Body cats={cats} />
         </div>
