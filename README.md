@@ -1,3 +1,5 @@
+Cats api with React. List and filter cats by name and country of origin.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
